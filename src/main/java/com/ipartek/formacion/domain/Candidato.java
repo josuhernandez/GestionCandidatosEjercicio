@@ -2,8 +2,12 @@ package com.ipartek.formacion.domain;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Candidato implements Serializable {
 
@@ -29,8 +33,36 @@ public class Candidato implements Serializable {
 	@Size(min = 3, max = 199)
 	private String email;
 
-	@NotNull
-	@Size(9)
+	@Min(0)
+	@Max(9)
 	private String telefono1;
+
+	@Min(0)
+	@Max(9)
+	private String telefono2;
+
+	@DateTimeFormat(pattern = "dd-mm-yyyy")
+	private String fecha_nacimiento;
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	@Override
+	public String toString() {
+		return "Candidato [dni=" + dni + ", nombre=" + nombre + "]";
+	}
 
 }
