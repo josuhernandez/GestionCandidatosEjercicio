@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<title>${pageContext.request.contextPath}/</title>
-	<base href="${pageContext.request.contextPath}/"></base>
+	
 	
 	<!-- CSS reset -->
 	<link href="<c:url value="/resources/css/normalize.css" />" rel="stylesheet">
@@ -28,5 +28,7 @@
 	<!-- CSS propio -->
 	<link href="<c:url value="/resources/css/styles.css?v=1.0" />" rel="stylesheet">
 	
+	
+	<base href="${pageContext.request.contextPath}/"></base>
 </head>
 <body>
