@@ -3,18 +3,23 @@
 <div class="container">
 	<h1>Lista de Candidatos</h1>
 	<p>${fecha}</p>
-	
-		<form:form action="candidato/buscar" method="get" commandName="candidato">
-			<form:input path="dni" placeholder="Buscar por dni"/>
+		
+		
+		<!-- 
+		<form:form action="candidato/buscar" method="post" commandName="candidato">
+			
 			<input type="submit" value="Buscar">	
 		</form:form>
-		
+		 -->
 		
 		<p><a class="btn btn-primary btn-xs" href="candidato/nuevo" role="button">Crear</a></p>
 		
 		<br><br>
 	
-	${msg}
+	<c:if test="${msg}">
+		<div class="alert alert-success" role="alert">${msg}</div>
+	</c:if>
+	 
 	 
     <c:forEach items="${candidatos}" var="candidato">
     	<a href="candidato/mostrar/${candidato.id}">
@@ -27,14 +32,6 @@
       	      
       <br><br>
     </c:forEach>
-
-	
-	
-	
-	
-	
-	
-	<a href="">Atras</a>
 
 <div class="container">
 <%@include file="../includes/footer.jsp" %>
