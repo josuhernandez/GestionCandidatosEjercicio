@@ -4,13 +4,17 @@
 	<h1>Lista de Candidatos</h1>
 	<p>${fecha}</p>
 	
-	
-		<p><a class="btn btn-primary btn-xs" href="candidato/buscar" role="button">Buscar</a></p>
+		<form:form action="candidato/buscar" method="get" commandName="candidato">
+			<form:input path="dni" placeholder="Buscar por dni"/>
+			<input type="submit" value="Buscar">	
+		</form:form>
+		
+		
 		<p><a class="btn btn-primary btn-xs" href="candidato/nuevo" role="button">Crear</a></p>
 		
 		<br><br>
 	
-	
+	${msg}
 	 
     <c:forEach items="${candidatos}" var="candidato">
     	<a href="candidato/mostrar/${candidato.id}">
