@@ -3,6 +3,7 @@ package com.ipartek.formacion.domain;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Candidato implements Serializable {
 
@@ -12,9 +13,11 @@ public class Candidato implements Serializable {
 	private long id;
 
 	@NotNull
+	@Size(max = 50)
 	private String nombre;
 
 	// TODO UNIQUE
+	@Size(max = 10)
 	private String dni;
 
 	public Candidato() {
