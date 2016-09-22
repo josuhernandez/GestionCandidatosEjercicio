@@ -11,7 +11,7 @@ public interface CandidatoManager extends Serializable {
 
 	Candidato getById(long id);
 
-	Candidato getByDni(long dni);
+	Candidato getByDni(String dni);
 
 	boolean eliminar(long id);
 
