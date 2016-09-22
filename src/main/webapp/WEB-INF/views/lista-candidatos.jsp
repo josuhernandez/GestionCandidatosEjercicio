@@ -1,23 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-		 pageEncoding="utf-8"%>
-		 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="includes/header.jsp"%>
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	
-</head>
 <body>
+	<!-- Enlace para volver al indice -->
+	<a href=""> &lt; &lt;Volver Index</a>
+	<br>
+
 	<h1>Lista Candidatos</h1>
 
-	
-	<c:out value="${candidatoPepe.nombre}"/>
-	<c:out value="${candidatoPepe.dni}"/>
+	<ol>
+	<c:forEach items="lista" var="candidato">
+		<li>
+			<a href="<c:out value="candidato/detalle/${candidato.id}"/>">
+				<c:out value="${candidato.nombre}"/>
+				<c:out value="${candidato.dni}"/>
+			</a>
+		</li>
 
+  	</c:forEach>
+	</ol>
 
-
-</body>
-</html>
+<%@ include file="includes/footer.jsp"%>

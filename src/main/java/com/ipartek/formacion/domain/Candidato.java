@@ -14,6 +14,9 @@ public class Candidato implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@NotNull
+	private long id;
+
+	@NotNull
 	@Size(min = 8, max = 9)
 	private String dni;
 
@@ -44,6 +47,16 @@ public class Candidato implements Serializable {
 	@DateTimeFormat(pattern = "dd-mm-yyyy")
 	private String fecha_nacimiento;
 
+	// getter y setters
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getDni() {
 		return dni;
 	}
@@ -60,9 +73,10 @@ public class Candidato implements Serializable {
 		this.nombre = nombre;
 	}
 
+	// toString
 	@Override
 	public String toString() {
-		return "Candidato [dni=" + dni + ", nombre=" + nombre + "]";
+		return "Candidato [id=" + id + ", dni=" + dni + ", nombre=" + nombre + "]";
 	}
 
 }

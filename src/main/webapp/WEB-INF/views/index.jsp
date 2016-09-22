@@ -1,9 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<html>
-<head>
-	<title>Home</title>
-</head>
+<%@ include file="includes/header.jsp"%>
 <body>
 <h1>
 	Hello world!  
@@ -20,5 +15,4 @@
 <hr>
 
 
-</body>
-</html>
+<%@ include file="includes/footer.jsp"%>
