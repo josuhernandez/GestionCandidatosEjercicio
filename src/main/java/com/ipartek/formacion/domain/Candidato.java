@@ -14,8 +14,16 @@ public class Candidato implements Serializable {
 	@NotNull
 	private String nombre;
 
-	// TODO validador Unique
+	// TODO UNIQUE
 	private String dni;
+
+	public Candidato() {
+		super();
+		this.id = 0;
+		this.nombre = "";
+		this.dni = "";
+
+	}
 
 	/* GETTERS AND SETTERS */
 
@@ -62,6 +70,10 @@ public class Candidato implements Serializable {
 	 */
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+
+	public boolean isNew() {
+		return (this.id == 0) ? true : false;
 	}
 
 	/* TO STRING */
