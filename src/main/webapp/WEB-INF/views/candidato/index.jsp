@@ -16,8 +16,11 @@
 		
 		<br><br>
 	
-	<c:if test="${msg}">
-		<div class="alert alert-success" role="alert">${msg}</div>
+	<c:if test="${existeMsg}">
+		<div class="alert alert-success" role="alert" dismissible>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			${msg}
+		</div>
 	</c:if>
 	 
 	 
