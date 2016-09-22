@@ -85,6 +85,7 @@ public class CandidatoController {
 	public ModelAndView salvar(@Valid Candidato candidato, BindingResult bindingResult) {
 		this.logger.trace("Salvando candidato....");
 
+		boolean existeMsg = false;
 		String msg = "Insertado candidato";
 
 		if (bindingResult.hasErrors()) {
@@ -96,13 +97,16 @@ public class CandidatoController {
 
 			if (candidato.isNew()) {
 				this.candidatoManager.insertar(candidato);
+				existeMsg = true;
 			} else {
 				this.candidatoManager.modificar(candidato);
 				msg = "Modificado candidato";
+				existeMsg = true;
 			}
 			final Map<String, Object> model = new HashMap<String, Object>();
 			model.put("candidato", candidato);
 			model.put("msg", msg);
+			model.put("existeMsg", existeMsg);
 			return new ModelAndView("candidato/form", model);
 		}
 
@@ -144,18 +148,22 @@ public class CandidatoController {
 	public ModelAndView eliminar(@PathVariable(value = "id") final long id) throws ServletException, IOException {
 		this.logger.trace("Eliminando candidato[" + id + "]....");
 
+		boolean existeMsg = false;
 		final String msgError = "No eliminado candidato[" + id + "]";
 		final String msg = "candidato[" + id + "] eliminado";
 
 		if (this.candidatoManager.eliminar(id)) {
 			this.logger.info(msg);
+			existeMsg = true;
 		} else {
 			this.logger.warn(msgError);
+			existeMsg = true;
 		}
 
 		final Map<String, Object> model = new HashMap<String, Object>();
 		model.put("msg", msg);
 		model.put("msgError", msgError);
+		model.put("existeMsg", existeMsg);
 		model.put("candidatos", this.candidatoManager.getAll());
 		model.put("fecha", new Date().toString());
 
