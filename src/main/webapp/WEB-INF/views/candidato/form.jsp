@@ -36,7 +36,15 @@
 </form:form>
 	
 	
-	<a href="../candidato">Atras</a>
+	<a href="candidato">Atras</a>
+	
+	<c:if test="${msg}">
+		<div class="alert alert-success" role="alert">${msg}</div>
+	</c:if>
+	
+	<c:if test="${msgError}">
+		<div class="alert alert-danger" role="alert">${msgError}</div>
+	</c:if>
 	
 </div>
 <%@include file="../includes/footer.jsp" %>
