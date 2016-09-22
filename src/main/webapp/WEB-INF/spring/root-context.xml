@@ -19,10 +19,39 @@
 		<property name="password" value="${mysql.pass}" />
 	</bean>
 	
-	<!--<bean id="InventarioDAOImp" class="com.ipartek.formacion.repository.InventarioDAOImp">
+	<!--
+	<bean id="InventarioDAOImp" class="com.ipartek.formacion.repository.InventarioDAOImp">
 		<property name="dataSource" ref="mysqlDataSource" />
 	</bean>	
 	-->
+	
+	<!-- Candidatos -->
+	<bean id="candidato1" class="com.ipartek.formacion.domain.Candidato">
+		<property name="id" value="1"></property>
+		<property name="dni" value="11111111-A"></property>
+		<property name="nombre" value="Candidato1"></property>
+	</bean>
+	<bean id="candidato2" class="com.ipartek.formacion.domain.Candidato">
+		<property name="id" value="2"></property>
+		<property name="dni" value="11111111-B"></property>
+		<property name="nombre" value="Candidato2"></property>
+	</bean>
+	<bean id="candidato3" class="com.ipartek.formacion.domain.Candidato">
+		<property name="id" value="3"></property>
+		<property name="dni" value="11111111-C"></property>
+		<property name="nombre" value="Candidato3"></property>
+	</bean>
+
+	<bean id="candidatoManager" class="com.ipartek.formacion.service.CandidatoManagerImpl">
+		<property name="candidatos">
+			<list>
+                <ref bean="candidato1"/>
+                <ref bean="candidato2"/>
+                <ref bean="candidato3"/>
+            </list>
+		</property>
+	</bean>
+	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
 </beans>
