@@ -1,7 +1,6 @@
 package com.ipartek.formacion.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,11 +43,10 @@ public class CandidatoController {
 	@RequestMapping(value = "/candidato", method = RequestMethod.GET)
 	public ModelAndView listar() throws ServletException, IOException {
 
-		this.logger.info("procesando peticion de listar candidatos...");
+		this.logger.info("procesando peticion para listar candidatos");
 
-		final ArrayList<Candidato> lista = (ArrayList<Candidato>) this.candidatoManager.getAll();
 		final Map<String, Object> model = new HashMap<String, Object>();
-		model.put("candidatos", lista);
+		model.put("candidatos", this.candidatoManager.getAll());
 		model.put("fecha", new Date().toString());
 
 		this.logger.info("Listados candidatos");
@@ -72,7 +70,7 @@ public class CandidatoController {
 
 		final Map<String, Object> model = new HashMap<String, Object>();
 		model.put("candidato", new Candidato());
-		model.put("fecha", new Date().toString());
+		model.put("isNew", true);
 
 		this.logger.info("creado candidato");
 
@@ -82,13 +80,13 @@ public class CandidatoController {
 
 	@RequestMapping(value = "/candidato/save", method = RequestMethod.POST)
 	public ModelAndView salvar(@Valid Candidato candidato, BindingResult bindingResult) {
-		this.logger.info("Salvando producto....");
+		this.logger.trace("Salvando candidato....");
 
 		if (bindingResult.hasErrors()) {
 			this.logger.warn("parametros no validos");
 			final Map<String, Object> model = new HashMap<String, Object>();
 			model.put("candidato", candidato);
-			return new ModelAndView("candidato/form", model);
+			return new ModelAndView("product/form", model);
 		} else {
 
 			if (candidato.isNew()) {
@@ -104,29 +102,6 @@ public class CandidatoController {
 	}
 
 	/**
-	 * Mostrar detalle candidato por dni
-	 *
-	 * @param dni
-	 * 
-	 * @return ModelAndView view: "index.jsp", model: { ArrayList
-	 *         &lt;Candidato&gt; "candidatos" , String "fecha" }
-	 * 
-	 */
-	@RequestMapping(value = "/candidato/buscar/{dni}", method = RequestMethod.GET)
-	public ModelAndView buscar(@PathVariable(value = "dni") final String dni) {
-		this.logger.trace("Mostrando detalle candidato[" + dni + "]....");
-
-		final ArrayList<Candidato> lista = (ArrayList<Candidato>) this.candidatoManager.getAll();
-		final Map<String, Object> model = new HashMap<String, Object>();
-		model.put("candidatos", lista);
-		model.put("fecha", new Date().toString());
-
-		this.logger.info("Detalle candidato" + dni);
-
-		return new ModelAndView("candidato/form", model);
-	}
-
-	/**
 	 * Mostrar detalle candidato por id
 	 *
 	 * @param id
@@ -138,6 +113,7 @@ public class CandidatoController {
 	@RequestMapping(value = "/candidato/mostrar/{id}", method = RequestMethod.GET)
 	public ModelAndView verDetalle(@PathVariable(value = "id") final long id) {
 		this.logger.trace("Mostrando detalle candidato[" + id + "]....");
+
 		final Map<String, Object> model = new HashMap<String, Object>();
 		model.put("product", this.candidatoManager.getById(id));
 		model.put("isNew", false);
@@ -157,15 +133,38 @@ public class CandidatoController {
 	 */
 	@RequestMapping(value = "/candidato/eliminar/{id}", method = RequestMethod.GET)
 	public ModelAndView eliminar(@PathVariable(value = "id") final long id) throws ServletException, IOException {
-		this.logger.info("Eliminando candidato[" + id + "]....");
+		this.logger.trace("Eliminando candidato[" + id + "]....");
 
-		final ArrayList<Candidato> lista = (ArrayList<Candidato>) this.candidatoManager.getAll();
+		String msg = "No eliminado candidato[" + id + "]";
+		if (this.candidatoManager.eliminar(id)) {
+			msg = "candidato[" + id + "] eliminado";
+			this.logger.info(msg);
+		} else {
+			this.logger.warn(msg);
+		}
+
 		final Map<String, Object> model = new HashMap<String, Object>();
-		model.put("candidatos", lista);
-		model.put("fecha", new Date().toString());
-
-		this.logger.info("Eliminado candidato[" + id + "]....");
+		model.put("msg", msg);
 
 		return new ModelAndView("candidato/index", model);
+	}
+
+	/**
+	 * Mostrar detalle candidato por dni
+	 *
+	 * @param dni
+	 * 
+	 * @return ModelAndView view: "index.jsp", model: { ArrayList
+	 *         &lt;Candidato&gt; "candidatos" , String "fecha" }
+	 * 
+	 */
+	@RequestMapping(value = "/candidato/buscar/{dni}", method = RequestMethod.GET)
+	public ModelAndView buscar(@PathVariable(value = "dni") final String dni) {
+		this.logger.trace("Mostrando candidato[" + dni + "]....");
+
+		final Map<String, Object> model = new HashMap<String, Object>();
+		model.put("candidatos", this.candidatoManager.getByDni(dni));
+		model.put("fecha", new Date().toString());
+		return new ModelAndView("product/index", model);
 	}
 }
