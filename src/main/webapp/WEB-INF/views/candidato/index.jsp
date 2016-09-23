@@ -5,23 +5,38 @@
 	<p>${fecha}</p>
 		
 		
-		<!-- 
-		<form:form action="candidato/buscar" method="post" commandName="candidato">
-			
+		
+		<form:form action="candidato/buscar/" method="get" commandName="searchItemForm">
+			<form:input path="dni"/>
 			<input type="submit" value="Buscar">	
 		</form:form>
-		 -->
+		
+		
+		
+		
+		
+		 
 		
 		<p><a class="btn btn-primary btn-xs" href="candidato/nuevo" role="button">Crear</a></p>
 		
 		<br><br>
 	
-	<c:if test="${existeMsg}">
+	<c:if test="${existeMsgEliminar}">
 		<div class="alert alert-success" role="alert" dismissible>
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			${msg}
+			${msgEliminado}
 		</div>
 	</c:if>
+	
+	
+	<c:if test="${existeMsgCandidato}">
+		<div class="alert alert-success" role="alert" dismissible>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			${msgBusqueda}
+		</div>
+		<a href="">Atras</a>
+	</c:if>
+	
 	 
 	 
     <c:forEach items="${candidatos}" var="candidato">
