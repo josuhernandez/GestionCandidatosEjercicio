@@ -57,7 +57,7 @@ public class CandidatoDAOImp implements CandidatoDAO {
 	public Candidato getById(long id) {
 		Candidato candidato = null;
 		// TODO CAMBIAR POR preparedStatement o callableStatement
-		final String SQL = "SELECT id,dni,nombre FROM candidatos where id =" + id;
+		final String SQL = "SELECT id,nombre,dni FROM candidatos where id =" + id;
 		try {
 			candidato = this.jdbctemplate.queryForObject(SQL, new CandidatoMapper());
 		} catch (final EmptyResultDataAccessException e) {
@@ -126,21 +126,21 @@ public class CandidatoDAOImp implements CandidatoDAO {
 	}
 
 	@Override
-	public Candidato getByDni(String dni) {
-		Candidato candidato = null;
+	public List<Candidato> getByDni(String dni) {
+		List<Candidato> candidatos = new ArrayList<Candidato>();
 		// TODO CAMBIAR POR preparedStatement o callableStatement
-		final String SQL = "SELECT id,dni,nombre FROM candidatos where dni =" + dni;
+		final String SQL = "SELECT id,dni,nombre FROM candidatos where dni ='" + dni + "'";
 		try {
-			candidato = this.jdbctemplate.queryForObject(SQL, new CandidatoMapper());
+			candidatos = this.jdbctemplate.query(SQL, new CandidatoMapper());
 		} catch (final EmptyResultDataAccessException e) {
 			logger.warn("No existe candidato con dni= " + dni);
-			candidato = null;
+			candidatos = null;
 		} catch (final Exception e) {
 			logger.error(e.getMessage());
-			candidato = null;
+			candidatos = null;
 		}
 
-		return candidato;
+		return candidatos;
 	}
 
 	@Autowired

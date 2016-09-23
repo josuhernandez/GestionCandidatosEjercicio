@@ -32,7 +32,7 @@ public class SimpleCandidatoManager implements CandidatoManager {
 	}
 
 	@Override
-	public Candidato getByDni(String dni) {
+	public List<Candidato> getByDni(String dni) {
 		return this.candidatoDAOImp.getByDni(dni);
 	}
 

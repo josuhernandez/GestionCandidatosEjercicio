@@ -11,7 +11,7 @@ public interface CandidatoDAO extends Serializable, DAOSetter {
 
 	Candidato getById(long id);
 
-	Candidato getByDni(String dni);
+	List<Candidato> getByDni(String dni);
 
 	boolean eliminar(long id);
 
