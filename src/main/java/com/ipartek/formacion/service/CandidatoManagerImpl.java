@@ -2,8 +2,11 @@ package com.ipartek.formacion.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ipartek.formacion.domain.Candidato;
 
+@Service("candidaoManagerImp")
 public class CandidatoManagerImpl implements CandidatoManager {
 
 	@Override
