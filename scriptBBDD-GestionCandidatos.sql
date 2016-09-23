@@ -10,12 +10,12 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Volcando estructura de base de datos para gc
-CREATE DATABASE IF NOT EXISTS `gc` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `gc`;
+-- Volcando estructura de base de datos para gc_jonfraile
+CREATE DATABASE IF NOT EXISTS `gc_jonfraile` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `gc_jonfraile`;
 
 
--- Volcando estructura para tabla gc.candidatos
+-- Volcando estructura para tabla gc_jonfraile.candidatos
 CREATE TABLE IF NOT EXISTS `candidatos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dni` varchar(10) DEFAULT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `candidatos` (
   UNIQUE KEY `dni` (`dni`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla gc.candidatos: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla gc_jonfraile.candidatos: ~2 rows (aproximadamente)
 DELETE FROM `candidatos`;
 /*!40000 ALTER TABLE `candidatos` DISABLE KEYS */;
 INSERT INTO `candidatos` (`id`, `dni`, `nombre`) VALUES
