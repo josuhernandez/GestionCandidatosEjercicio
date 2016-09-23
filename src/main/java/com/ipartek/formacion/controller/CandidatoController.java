@@ -3,6 +3,7 @@ package com.ipartek.formacion.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ipartek.formacion.domain.Candidato;
-import com.ipartek.formacion.service.CandidatoManager;
+import com.ipartek.formacion.form.SearchItemForm;
+import com.ipartek.formacion.service.CandidatoManager;;
 
 @Controller
 public class CandidatoController {
@@ -45,6 +47,9 @@ public class CandidatoController {
 		this.logger.info("procesando peticion para listar candidatos");
 
 		final Map<String, Object> model = new HashMap<String, Object>();
+		final SearchItemForm searchItemForm = new SearchItemForm();
+
+		model.put("searchItemForm", searchItemForm);
 		model.put("candidatos", this.candidatoManager.getAll());
 		model.put("fecha", new Date().toString());
 
@@ -148,24 +153,26 @@ public class CandidatoController {
 	public ModelAndView eliminar(@PathVariable(value = "id") final long id) throws ServletException, IOException {
 		this.logger.trace("Eliminando candidato[" + id + "]....");
 
-		boolean existeMsg = false;
-		final String msgError = "No eliminado candidato[" + id + "]";
-		final String msg = "candidato[" + id + "] eliminado";
+		boolean existeMsgEliminar = false;
+		final String msgEliminadoError = "No eliminado candidato[" + id + "]";
+		final String msgEliminado = "candidato[" + id + "] eliminado";
+		final SearchItemForm searchItemForm = new SearchItemForm();
 
 		if (this.candidatoManager.eliminar(id)) {
-			this.logger.info(msg);
-			existeMsg = true;
+			this.logger.info(msgEliminado);
+			existeMsgEliminar = true;
 		} else {
-			this.logger.warn(msgError);
-			existeMsg = true;
+			this.logger.warn(msgEliminadoError);
+			existeMsgEliminar = true;
 		}
 
 		final Map<String, Object> model = new HashMap<String, Object>();
-		model.put("msg", msg);
-		model.put("msgError", msgError);
-		model.put("existeMsg", existeMsg);
+		model.put("msgEliminado", msgEliminado);
+		model.put("msgEliminadoError", msgEliminadoError);
+		model.put("existeMsgEliminar", existeMsgEliminar);
 		model.put("candidatos", this.candidatoManager.getAll());
 		model.put("fecha", new Date().toString());
+		model.put("searchItemForm", searchItemForm);
 
 		return new ModelAndView("candidato/index", model);
 	}
@@ -174,18 +181,36 @@ public class CandidatoController {
 	 * Mostrar detalle candidato por dni
 	 *
 	 * @param dni
+	 * @return
 	 * 
 	 * @return ModelAndView view: "index.jsp", model: { ArrayList
 	 *         &lt;Candidato&gt; "candidatos" , String "fecha" }
+	 * @throws IOException
+	 * @throws ServletException
 	 * 
 	 */
-	@RequestMapping(value = "/candidato/buscar/{dni}", method = RequestMethod.GET)
-	public ModelAndView buscar(@PathVariable(value = "dni") final String dni) {
+	@RequestMapping(value = "/candidato/buscar/", method = RequestMethod.GET, params = "dni")
+	public ModelAndView buscar(String dni) throws ServletException, IOException {
 		this.logger.trace("Mostrando candidato[" + dni + "]....");
 
 		final Map<String, Object> model = new HashMap<String, Object>();
-		model.put("candidatos", this.candidatoManager.getByDni(dni));
+		final SearchItemForm searchItemForm = new SearchItemForm();
+		final String msgBusqueda = "Candidato no encontrado";
+		boolean existeMsgCandidato = false;
+
+		final List<Candidato> candidatosById = this.candidatoManager.getByDni(dni);
+
+		model.put("searchItemForm", searchItemForm);
+		model.put("candidatos", candidatosById);
 		model.put("fecha", new Date().toString());
-		return new ModelAndView("product/index", model);
+
+		if (candidatosById.size() == 0) {
+			existeMsgCandidato = true;
+			model.put("msgBusqueda", msgBusqueda);
+		}
+		model.put("existeMsgCandidato", existeMsgCandidato);
+		this.logger.info("Listados candidatos");
+
+		return new ModelAndView("candidato/index", model);
 	}
 }
