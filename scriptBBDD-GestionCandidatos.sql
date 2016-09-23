@@ -22,11 +22,14 @@ CREATE TABLE IF NOT EXISTS `candidatos` (
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `dni` (`dni`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla gc.candidatos: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla gc.candidatos: ~1 rows (aproximadamente)
 DELETE FROM `candidatos`;
 /*!40000 ALTER TABLE `candidatos` DISABLE KEYS */;
+INSERT INTO `candidatos` (`id`, `dni`, `nombre`) VALUES
+	(1, '12345678A', 'Jon'),
+	(6, '111', 'asda');
 /*!40000 ALTER TABLE `candidatos` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
