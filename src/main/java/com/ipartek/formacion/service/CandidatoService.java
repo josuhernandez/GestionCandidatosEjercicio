@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.ipartek.formacion.domain.Candidato;
 
-public interface CandidatoManager extends Serializable {
+public interface CandidatoService extends Serializable {
 
-	public List<Candidato> getCandidato();
+	public List<Candidato> getCandidatos();
 
 	Candidato getById(long id);
 

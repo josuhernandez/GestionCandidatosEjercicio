@@ -24,15 +24,15 @@ public class Candidato implements Serializable {
 	@Size(min = 3, max = 199)
 	private String nombre;
 
-	@NotNull
+	//@NotNull
 	@Size(min = 3, max = 199)
 	private String apellido1;
 
-	@NotNull
+	//@NotNull
 	@Size(min = 3, max = 199)
 	private String apellido2;
 
-	@NotNull
+	//@NotNull
 	@Size(min = 3, max = 199)
 	private String email;
 
@@ -47,6 +47,15 @@ public class Candidato implements Serializable {
 	@DateTimeFormat(pattern = "dd-mm-yyyy")
 	private String fecha_nacimiento;
 
+	
+	//Constructor vacio
+	public Candidato() {
+		super();
+		this.id = 0;
+		this.nombre = "";
+		this.dni = "";
+	}
+	
 	// getter y setters
 
 	public long getId() {
@@ -71,6 +80,11 @@ public class Candidato implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	//isNew
+	public boolean isNew() {
+		return (this.id == 0) ? true : false;
 	}
 
 	// toString

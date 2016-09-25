@@ -9,7 +9,7 @@ import com.ipartek.formacion.domain.Candidato;
 
 public interface CandidatoDAO extends Serializable {
 
-	List<Candidato> getCandidato();
+	List<Candidato> getCandidatos();
 
 	Candidato getById(long id);
 
