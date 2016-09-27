@@ -43,6 +43,8 @@
     	<a href="candidato/mostrar/${candidato.id}">
       		<c:out value="${candidato.dni}"/> 
       		<c:out value="${candidato.nombre}"/>
+      		<c:out value="${candidato.fechaAlta}"/>
+      		
       	</a>
       	<a href="candidato/eliminar/${candidato.id}">
       		[X]

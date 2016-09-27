@@ -15,6 +15,7 @@ public class CandidatoMapper implements RowMapper<Candidato> {
 		candidato.setId(rs.getLong("id"));
 		candidato.setDni(rs.getString("dni"));
 		candidato.setNombre(rs.getString("nombre"));
+		candidato.setFechaAlta(rs.getTimestamp("fecha_alta"));
 		return candidato;
 	}
 

@@ -32,6 +32,9 @@
 	<form:errors path="nombre" cssClass="error"/>
 	<br><br>
 	
+	
+	
+	
 	<input type="submit" value="${boton}">
 </form:form>
 	

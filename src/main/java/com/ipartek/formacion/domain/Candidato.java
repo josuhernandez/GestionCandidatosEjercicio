@@ -1,9 +1,12 @@
 package com.ipartek.formacion.domain;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.ipartek.formacion.validation.Nif;
 
@@ -14,12 +17,14 @@ public class Candidato implements Serializable {
 	@NotNull
 	private long id;
 
-	@NotNull
-	@Size(max = 50)
+	@NotEmpty
+	@Size(min = 2, max = 50)
 	private String nombre;
 
 	@Nif
 	private String dni;
+
+	private Timestamp fechaAlta;
 
 	public Candidato() {
 		super();
@@ -76,6 +81,21 @@ public class Candidato implements Serializable {
 		this.dni = dni;
 	}
 
+	/**
+	 * @return the fechaAlta
+	 */
+	public Timestamp getFechaAlta() {
+		return fechaAlta;
+	}
+
+	/**
+	 * @param fechaAlta
+	 *            the fechaAlta to set
+	 */
+	public void setFechaAlta(Timestamp fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
+
 	public boolean isNew() {
 		return (this.id == 0) ? true : false;
 	}
@@ -89,7 +109,7 @@ public class Candidato implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Candidato [id=" + this.id + ", nombre=" + this.nombre + ", dni=" + this.dni + "]";
+		return "Candidato [id=" + id + ", nombre=" + nombre + ", dni=" + dni + ", fechaAlta=" + fechaAlta + "]";
 	}
 
 }

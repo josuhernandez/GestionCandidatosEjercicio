@@ -51,7 +51,6 @@ public class CandidatoController {
 
 		model.put("searchItemForm", searchItemForm);
 		model.put("candidatos", this.candidatoManager.getAll());
-		model.put("fecha", new Date().toString());
 
 		this.logger.info("Listados candidatos");
 
@@ -91,30 +90,34 @@ public class CandidatoController {
 		this.logger.trace("Salvando candidato....");
 
 		boolean existeMsg = false;
-		String msg = "Insertado candidato";
+		String msg = "Problema al insertar candidato";
+		String view = "candidato/form";
+		final Map<String, Object> model = new HashMap<String, Object>();
+		Date fecha_alta = new Date();
 
 		if (bindingResult.hasErrors()) {
 			this.logger.warn("parametros no validos");
-			final Map<String, Object> model = new HashMap<String, Object>();
-			model.put("candidato", candidato);
-			return new ModelAndView("product/form", model);
+
+			msg = "Por favor rellena los campos de forma correcta";
+
 		} else {
 
 			if (candidato.isNew()) {
 				this.candidatoManager.insertar(candidato);
-				existeMsg = true;
+				msg = "Candidato insertado satisfactoriamente";
 			} else {
-				this.candidatoManager.modificar(candidato);
-				msg = "Modificado candidato";
-				existeMsg = true;
-			}
-			final Map<String, Object> model = new HashMap<String, Object>();
-			model.put("candidato", candidato);
-			model.put("msg", msg);
-			model.put("existeMsg", existeMsg);
-			return new ModelAndView("candidato/form", model);
-		}
+				// si el DAO devuelve un true al modificar
+				if (this.candidatoManager.modificar(candidato)) {
+					msg = "Modificado candidato";
+				}
 
+			}
+
+		}
+		model.put("candidato", candidato);
+		model.put("msg", msg);
+		// model.put("fecha_alta", fecha_alta);
+		return new ModelAndView(view, model);
 	}
 
 	/**

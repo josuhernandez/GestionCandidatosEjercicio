@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -40,7 +41,7 @@ public class CandidatoDAOImp implements CandidatoDAO {
 	public List<Candidato> getAll() {
 		List<Candidato> candidatos = new ArrayList<Candidato>();
 
-		final String SQL = "SELECT id,dni,nombre FROM candidatos;";
+		final String SQL = "SELECT id,dni,nombre,fecha_alta FROM candidatos;";
 		try {
 			candidatos = this.jdbctemplate.query(SQL, new CandidatoMapper());
 		} catch (final EmptyResultDataAccessException e) {
@@ -88,23 +89,33 @@ public class CandidatoDAOImp implements CandidatoDAO {
 	public boolean insertar(final Candidato candidato) {
 		boolean resul = false;
 		int affectedRows = 0;
+		try {
+			final KeyHolder keyHolder = new GeneratedKeyHolder();
+			final String SQL = "INSERT INTO `candidatos` (`dni`, `nombre`) VALUES (? , ? )";
 
-		final KeyHolder keyHolder = new GeneratedKeyHolder();
-		final String SQL = "INSERT INTO `candidatos` (`dni`, `nombre`) VALUES (? , ? )";
-		affectedRows = this.jdbctemplate.update(new PreparedStatementCreator() {
-			@Override
-			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
-				final PreparedStatement ps = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-				ps.setString(1, candidato.getDni());
-				ps.setString(2, candidato.getNombre());
-				return ps;
+			affectedRows = this.jdbctemplate.update(new PreparedStatementCreator() {
+				@Override
+				public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+					final PreparedStatement ps = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+					ps.setString(1, candidato.getDni());
+					ps.setString(2, candidato.getNombre());
+
+					return ps;
+				}
+			}, keyHolder);
+
+			candidato.setId(keyHolder.getKey().longValue());
+
+			if (affectedRows == 1) {
+				candidato.setId(keyHolder.getKey().longValue());
+				resul = true;
 			}
-		}, keyHolder);
 
-		candidato.setId(keyHolder.getKey().longValue());
+		} catch (DuplicateKeyException e) {
+			logger.error("Constrains Violation", e.getMessage());
 
-		if (affectedRows != 0) {
-			resul = true;
+		} catch (Exception e) {
+			logger.error("No se puede insertar", e.getMessage());
 		}
 
 		return resul;
